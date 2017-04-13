@@ -1,0 +1,155 @@
+<vertical-sidebar></vertical-sidebar>
+<div class="content-area detail-page">
+    <div class="dr-info-box">
+        <div class="user-b1 col_6 last">
+            <div class="doctor-detail">
+                <h3>{{vlService.vlcData.doctorDetail.attend_complete_name}}</h3>
+                <p>[{{vlService.vlcData.doctorDetail.attend}}]</p>
+                <div class="dr-id"><img src="../../../../../../public/images/dr_address_white.png" alt="" height="12"
+                                        width="12"> <a (click)="vlService.mAddressFlag = true" id="show_addresses"
+                                                       *ngIf="vlService.doctorAddress.length > 1">Click to view provider
+                    addresses</a>
+                    <p *ngIf="vlService.doctorAddress.length == 1">{{vlService.doctorAddress[0]}}</p>
+                    <p *ngIf="vlService.doctorAddress.length == 0">{{vlService.vlcData.doctorDetail.pos}}</p>
+                </div>
+                <p><span class="gray-color">Review Period:</span> {{0 | reviewDate}}</p>
+            </div>
+            <div class="flag-red" *ngIf="vlService.vlcData.topDetail.color_code == 'red'"></div>
+            <div class="flag-green" *ngIf="vlService.vlcData.topDetail.color_code == 'green'"></div>
+            <div class="flag-yellow" *ngIf="vlService.vlcData.topDetail.color_code == 'yellow'"></div>
+            <p class="speciality_css"><span class="gray-color">Specialty: </span>
+                {{vlService.vlcData.doctorSpecialty.speciality}}</p>
+        </div>
+        <div id="doc_addresses" class="doc-address-box" style="height: auto !important;" *ngIf="vlService.mAddressFlag">
+            <h3 style="margin:0; margin-bottom:10px; padding:0;">
+                Provider Addresses
+                <a (click)="vlService.mAddressFlag = false" class="cross">x</a> <img
+                    src="../../../../../../public/images/dr_address_black.png" alt=""
+                    height="18" width="18" style="float:right;"></h3>
+
+            <div class="DocAddress" style="overflow:auto; height:auto;">
+                <p class="dr-address" *ngFor="let address of vlService.doctorAddress">{{address}}</p>
+            </div>
+        </div>
+        <div class="user-b2 col_5 last right">
+            <div class="row">
+                <div class="tab doc-column-6">
+                    <ul>
+                        <li> {{vlService.vlcData.topDetail.patient_count != null ?
+                            vlService.vlcData.topDetail.patient_count : 0}}<br>
+                            <div class="small-font">Patients seen</div>
+                        </li>
+                        <li> {{vlService.vlcData.topDetail.procedure_count}}
+                            <div class="small-font">Itemized Procedures<br>
+                                Performed
+                            </div>
+                        </li>
+                        <li> {{vlService.vlcData.topDetail.tTime != null ? vlService.vlcData.topDetail.tTime :
+                            0}}
+                            <div class="small-font"> Total Minutes
+                            </div>
+                        </li>
+                        <li> ${{vlService.vlcData.topDetail.income | number : '1.2-2'}}
+                            <div class="small-font"> Total Amount<br>
+                                Billed
+                            </div>
+                        </li>
+                        <li id="hour_popup"> {{vlService.vlcData.doctorDetail.daily_working_hours != null ?
+                            vlService.vlcData.doctorDetail.daily_working_hours : 0}}<br>
+                            <div class="small-font">Working Hours <br>
+                                per Day
+                            </div>
+                        </li>
+                        <li> {{vlService.vlcData.topDetail.maximum_time != null ?
+                            vlService.vlcData.topDetail.maximum_time :
+                            0}}
+                            <div class="small-font">Total Max Time</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="days-popup-outer" id="days_poup" style="display: none;">
+                    <div class="days-popup-inner"><a class="cross-btn" href="javascript:void(0)"
+                                                     onclick="close_hover_data()"> <img alt=""
+                                                                                        src="../../../../../../public/images/cross-btn-2.png">
+                    </a>
+                        <table width="100%" height="80">
+                            <tr>
+                                <td width="16%" align="center"><span class="text-1">Monday</span> <br>
+                                    <span class="text-2">8 Hours</span></td>
+                                <td width="16%" align="center"><span class="text-1">Tuesday</span> <br>
+                                    <span class="text-2">8 Hours</span></td>
+                                <td width="16%" align="center"><span class="text-1">Wednesday</span> <br>
+                                    <span class="text-2">8Hours</span></td>
+                                <td width="16%" align="center"><span class="text-1">Thursday</span> <br>
+                                    <span class="text-2"> 8 Hours</span></td>
+                                <td width="16%" align="center"><span class="text-1">Friday</span> <br>
+                                    <span class="text-2">8 Hours</span></td>
+                                <td width="17%" align="center"><span class="text-1">Saturday</span> <br>
+                                    <span class="text-2">8 Hours</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid-search mt-lg">
+        <h3>Service Level Detail</h3>
+        <div class="search-filter" id="search-filter-list">
+            <div class="Inline-b">
+                <label class="colorWhite">Sort by</label>
+                <select name="search_by_day" id="search_by_day" class="select-filter" [(ngModel)]="searchDay"
+                        (change)="searchByDay()">
+                    <option value="">All Days</option>
+                    <option value="monday">Monday</option>
+                    <option value="tuesday">Tuesday</option>
+                    <option value="wednesday">Wednesday</option>
+                    <option value="thursday">Thursday</option>
+                    <option value="friday">Friday</option>
+                    <option value="saturday">Saturday</option>
+                </select>
+            </div>
+
+            <div class="Inline-b">
+                <label class="colorWhite">Sort by</label>
+                <select class="select-filter" [(ngModel)]="searchIndicator" (change)="searchByIndicator()">
+                    <option value="">All Indicators</option>
+                    <option value="red">Red</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="green">Green</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <p *ngIf="loadingPagination" style="color: white;">Processing.....</p>
+    <p *ngIf="vlService.vlcData.count.count == 0" style="color: white;">No Record Available</p>
+    <div *ngIf="!loadingPagination">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="items-grid"
+               *ngIf="vlService.vlcData.count.count > 0">
+            <tr>
+                <th width="6%" class="textCenter">Sr.#</th>
+                <th width="30%" class="textCenter">Date of Service</th>
+                <th width="5%" class="textCenter">Day</th>
+                <th width="5%" class="textCenter">Indicator</th>
+                <th width="20%" class="textCenter">View Detail</th>
+
+            </tr>
+            <tr
+                    *ngFor="let item of vlService.vlcData.procedureList | paginate: { itemsPerPage: 10, currentPage: currentPageNumber, totalItems: vlService.vlcData.count.count}; let i=index;">
+                <td valign="top" align="center">{{getSrNo(i)}}</td>
+                <td valign="top" align="center">{{item.dos}}</td>
+                <td valign="top" align="center">{{item.day_name}}</td>
+                <td valign="top" align="center"><img src="{{getImageUrl(item.indicator, 'png')}}"></td>
+                <td align="center" valign="top">
+                    <a (click)="dateWiseReport(item.dos, vlService.vlcData.doctorDetail.attend)">
+                        <img src="../../../../../../public/images/icon-view.png" alt="" title="View Detail"
+                             width="16"
+                             height="19" border="0">
+                    </a>
+                </td>
+            </tr>
+        </table>
+        <pagination-controls (pageChange)="pageChanged($event)" [autoHide]="true">
+        </pagination-controls>
+    </div>
+</div>

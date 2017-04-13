@@ -1,0 +1,9 @@
+<div id="loading" *ngIf="_appDataService.loadingFlag">
+    <img id="loading-image" src="../../public/images/loading_icon.gif" alt="Loading..."/>
+</div>
+<fds-header *ngIf="_appDataService.isLoggedIn"></fds-header>
+<div>
+    <router-outlet></router-outlet>
+</div>
+
+<fds-footer></fds-footer>

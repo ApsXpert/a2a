@@ -1,0 +1,51 @@
+<div class="main-content" *ngIf="vdcService.vdRequest.sectionId == algos.PATIENT_IN_CHAIR">
+    <patient-in-chair (toList)="backToList($event)"></patient-in-chair>
+</div>
+
+<div class="main-content" *ngIf="vdcService.vdRequest.sectionId == algos.FULL_SERIES_XRAYS">
+    <full-series-xrays (toList)="backToList($event)"></full-series-xrays>
+</div>
+
+<div class="main-content" *ngIf="vdcService.vdRequest.sectionId == algos.CROWN_BUILD_UP">
+    <crown-buildup-detail (toList)="backToList($event)"></crown-buildup-detail>
+</div>
+
+<div class="main-content" *ngIf="vdcService.vdRequest.sectionId == algos.DOCTOR_WITH_PATIENT">
+    <doctor-with-patient-detail (toList)="backToList($event)"></doctor-with-patient-detail>
+</div>
+
+<div class="main-content" *ngIf="vdcService.vdRequest.sectionId == algos.MULTI_DOCTOR">
+    <multiple-doctor-detail (toList)="backToList($event)"></multiple-doctor-detail>
+</div>
+
+<div class="main-content" *ngIf="+vdcService.vdRequest.sectionId == algos.OVERREACTIVE">
+    <over-active-detail (toList)="backToList($event)"></over-active-detail>
+</div>
+
+<div class="main-content" *ngIf="vdcService.vdRequest.sectionId == algos.COMPREHENSIVE_PERIODONTAL_EXAM">
+    <comprehensive-perio-exam-detail (toList)="backToList($event)"></comprehensive-perio-exam-detail>
+</div>
+
+<div class="main-content" *ngIf="vdcService.vdRequest.sectionId == algos.PERIODONTAL_MAINTENANCE_VS_PROPHY">
+    <perio-maintenance-vs-prophy-detail (toList)="backToList($event)"></perio-maintenance-vs-prophy-detail>
+</div>
+
+<div class="main-content" *ngIf="vdcService.vdRequest.sectionId == algos.PERIODONTAL_SCALING_VS_PROPHY">
+    <perio-scaling-vs-prophy-detail (toList)="backToList($event)"></perio-scaling-vs-prophy-detail>
+</div>
+
+<div class="main-content" *ngIf="vdcService.vdRequest.sectionId == algos.THIRD_MOLAR_EXTRACTION">
+    <third-molar-extraction-detail (toList)="backToList($event)"></third-molar-extraction-detail>
+</div>
+
+<div class="main-content" *ngIf="vdcService.vdRequest.sectionId == algos.PRIMARY_TOOTH_EXTRACTION">
+    <primary-tooth-extraction-detail (toList)="backToList($event)"></primary-tooth-extraction-detail>
+</div>
+
+<div class="main-content" *ngIf="vdcService.vdRequest.sectionId == algos.UNJUSTIFIED_SURGICAL_EXTEACTION">
+    <unjustified-surgical-extraction-detail (toList)="backToList($event)"></unjustified-surgical-extraction-detail>
+</div>
+
+<div class="main-content" *ngIf="vdcService.vdRequest.sectionId == algos.IMPOSSIBLE_AGES">
+    <impossible-ages-detail (toList)="backToList($event)"></impossible-ages-detail>
+</div>

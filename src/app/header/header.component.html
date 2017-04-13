@@ -1,0 +1,18 @@
+<header class="app-header">
+    <div class="logo"><a href="#/dashboard"><img src="../../../public/images/logo.png"></a></div>
+    <nav class="user-info"><strong>Welcome</strong>
+        <p>Franklin Din</p>
+        <a (click)="logout()" class="logout">Log Out</a>
+    </nav>
+    <div class="filter-section">
+        <ul>
+
+            <li *ngFor="let  tab of _dashboardService.tabs; let i=index;"><a routerLink='/{{tab.title}}/{{tab.moduleId}}'>
+                <i class="fa fa-heartbeat"></i>{{tab.title}}
+            </a></li>
+        </ul>
+
+        <button (click)="backToGraph()" *ngIf="_appDataService.graphBackButton">Back to Graph</button>
+    </div>
+    <div class="clear-div"></div>
+</header>

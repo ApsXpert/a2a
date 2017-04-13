@@ -1,0 +1,33 @@
+<aside id="sidebar">
+    <div class="state-section"><span class="sec-label">Select</span> <span class="sec-field">
+      <select name="change_scope" id="change_scope" class="state-section" [(ngModel)]="vsbService.algoId">
+        <optgroup *ngFor="let key of verticalService.sideBarAlgoGroups | fdsModules" label="{{key.key}}">
+        <option *ngFor="let algo of key.value" value="{{algo.algo_id}}"
+                selected="selected">{{algo.name}}</option>
+        </optgroup>
+      </select>
+      </span></div>
+
+
+    <div class="aside-inner">
+
+        <p>Provider </p>
+        <p-autoComplete [(ngModel)]="vsbService.provider" [suggestions]="vsbService.results" field="text"
+                        placehodler="Enter Provider Name"
+                        (completeMethod)="search($event)"></p-autoComplete>
+        <p *ngIf="vsbService.algoId != vsbService.algos.CODE_DISTRIBUTION">Date of Service</p>
+        <ng2-datepicker [(ngModel)]="vsbService.date" *ngIf="vsbService.algoId != vsbService.algos.CODE_DISTRIBUTION"></ng2-datepicker>
+
+        <p *ngIf="vsbService.algoId == vsbService.algos.CODE_DISTRIBUTION">Procedure</p>
+        <select [(ngModel)]="vsbService.sProcedure" *ngIf="vsbService.algoId == vsbService.algos.CODE_DISTRIBUTION">
+            <option value="0">All</option>
+            <option *ngFor="let procedure of vsbService.procedures" value="{{procedure}}">{{procedure}}</option>
+        </select>
+
+        <div class="clear"></div>
+        <input class="orange-button" type="button" value="Filter Data" title="Filter Data" (click)="filterData()">
+    </div>
+
+    <a href="javascript:void(0);" class="closePanel" onclick="closePanel()" title="Close"><i
+            class="fa fa-angle-double-left"></i></a>
+</aside>

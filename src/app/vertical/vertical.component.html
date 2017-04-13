@@ -1,0 +1,61 @@
+<div class="main-content">
+    <vertical-sidebar></vertical-sidebar>
+
+    <div class="content-area">
+        <div class="content-head">
+            <div class="volume-box fr"><i class="fa fa-volume-up"></i>
+                <div class="onoffswitch">
+                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch"
+                           checked="checked">
+                    <label class="onoffswitch-label" for="myonoffswitch"> <span class="onoffswitch-inner"></span> <span
+                            class="onoffswitch-switch"></span> </label>
+                </div>
+            </div>
+        </div>
+        <div style="position:absolute;z-index:99;display:none;" id="tooltip1b"></div>
+        <div *ngIf="noData">No Record Found</div>
+        <p style="color: white" *ngIf="isLoading">Loading....</p>
+        <div *ngIf="pagesDropDownArr.length > 0">
+            <p style="color: white">{{currentPage}}</p> Out of {{pagesDropDownArr.length}}
+            <select [(ngModel)]="currentPage" (change)="onGraphPageChange($event)">
+                <option *ngFor="let i of pagesDropDownArr" value="{{i}}">{{i}}</option>
+            </select>
+        </div>
+        <div class="graph-area">
+            <div id="chart1b" class="plot" style="width:auto;height:400px;"></div>
+        </div>
+        <div id="calender_window">
+            <div class="filter-buttons">
+                <button (click)="changeFilterOption(1)" [disabled]="isYearDisble()" id="year_opt" style="cursor:pointer"
+                   class="filer-option-button selected"
+                   title="Year">Year</button>
+                <button (click)="changeFilterOption(2)" [disabled]="isDisble()" id="month_opt" style="cursor:pointer" class="filer-option-button"
+                   title="Month">Month</button>
+                <button (click)="changeFilterOption(3)" [disabled]="isDisble()" id="day_opt" style="cursor:pointer" class="filer-option-button"
+                   title="Day">Day</button>
+            </div>
+
+            <div class="filter-area">
+                <select class="combobox" *ngIf="vmService.stateData.yearOption" [(ngModel)]="vmService.stateData.year">
+                    <option *ngFor="let year of _appDataService.dashboardSideMenuYears" [value]="year.year">
+                        {{year.year}}
+                    </option>
+                </select>
+                <select class="combobox" *ngIf="vmService.stateData.monthOption && !isDisble()"
+                        [(ngModel)]="vmService.stateData.month">
+                    <option *ngFor="let month of vmService.months" value="{{month.value}}">{{month.name}}</option>
+                </select>
+
+                <select class="combobox" *ngIf="vmService.stateData.dayOption && !isDisble()"
+                        [(ngModel)]="vmService.stateData.day">
+                    <option *ngFor="let day of vmService.monthDays" value="{{day.value}}">{{day.title}}</option>
+                </select>
+
+                <button id="filter" name="filter" style="cursor:pointer" class="filter-button" title="Filter"
+                        (click)="filterData()"><i
+                        class="fa fa-filter"></i>Filter Data
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

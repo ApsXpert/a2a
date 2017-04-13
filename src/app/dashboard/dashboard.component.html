@@ -1,0 +1,531 @@
+<section class="dashboard-section">
+    <div class="dashboard-tabs">
+
+        <select #t (change)="yearChanged(t.value)">
+            <option *ngFor="let year of _appDataService.dashboardSideMenuYears" [value]="year.year">{{year.year}}
+            </option>
+        </select>
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs gradient" role="tablist">
+            <li *ngFor="let _tab of _dashboardService.tabs" role="presentation" class="active">
+                <a role="tab" data-toggle="tab" (click)="moduleTabChanged(_tab.moduleId)">{{_tab.title}} Analysis</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="axiomatic" *ngIf="axiomaticFlag">
+                <div class="fl-row">
+                    <div class="fl-col-sm-3">
+                        <div class="fl-row">
+                            <div class="fl-col-sm-12">
+                                <div class="fl-box mb-lg">
+                                    <div class="box-heading">
+                                        <h2>{{_dashboardService.fsxStats.algo_title}}</h2>
+                                        <a routerLink="/axiomatic/{{_dashboardService.fsxStats.type}}/{{_dashboardService.fsxStats.year}}"><i
+                                                class="fa fa-external-link"></i></a>
+                                    </div>
+                                    <div class="box-content">
+                                        <div class="fl-row">
+                                            <div class="fl-col-sm-6 graphical-view">
+                                                <div class="graph-bars">
+                                                    <span class="bar-red"
+                                                          [style.height]="getBarHeights(_dashboardService.fsxStats.number_of_providers, _dashboardService.fsxStats.total_red)"></span>
+                                                    <span class="bar-green"
+                                                          [style.height]="getBarHeights(_dashboardService.fsxStats.number_of_providers, _dashboardService.fsxStats.total_green)"></span>
+                                                    <span class="bar-yellow"
+                                                          [style.height]="getBarHeights(_dashboardService.fsxStats.number_of_providers, _dashboardService.fsxStats.total_yellow)"></span>
+                                                </div>
+                                                <ul class="graph-legend">
+                                                    <li><span class="bar-red"></span><label>{{calculatePercentage(_dashboardService.fsxStats.number_of_providers,
+                                                        _dashboardService.fsxStats.total_red)}}</label></li>
+                                                    <li><span class="bar-green"></span><label>{{calculatePercentage(_dashboardService.fsxStats.number_of_providers,
+                                                        _dashboardService.fsxStats.total_green)}}</label></li>
+                                                    <li><span class="bar-yellow"></span><label>{{calculatePercentage(_dashboardService.fsxStats.number_of_providers,
+                                                        _dashboardService.fsxStats.total_yellow)}}</label></li>
+                                                </ul>
+                                            </div>
+                                            <div class="fl-col-sm-6 content-view">
+                                                <b>{{_dashboardService.fsxStats.number_of_providers}}</b>
+                                                <small>Active Providers</small>
+                                                <ul class="graph-legend">
+                                                    <li><span class="bar-red"></span><label>{{_dashboardService.fsxStats.total_red}}</label>
+                                                    </li>
+                                                    <li><span class="bar-green"></span><label>{{_dashboardService.fsxStats.total_green}}</label>
+                                                    </li>
+                                                    <li><span class="bar-yellow"></span><label>{{_dashboardService.fsxStats.total_yellow}}</label>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-footer">
+                                        <div class="fl-row">
+                                            <a *ngFor="let algo of _dashboardService.moduleStats['Full Series X-Rays']; let i=index;"
+                                               [ngClass]="{'    active-link': i==0}" class="fl-col-sm-12 smalltab-view">{{algo.name}}</a>
+                                            <div class="clear-div"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fl-col-sm-3">
+                        <div class="fl-row">
+                            <div class="fl-col-sm-12">
+                                <div class="fl-box mb-lg">
+                                    <div class="box-heading">
+                                        <h2>{{_dashboardService.crownBuildStats.algo_title}}</h2>
+                                        <a routerLink="/axiomatic/{{_dashboardService.crownBuildStats.type}}/{{_dashboardService.crownBuildStats.year}}"><i
+                                                class="fa fa-external-link"></i></a>
+                                    </div>
+                                    <div class="box-content">
+                                        <div class="fl-row">
+                                            <div class="fl-col-sm-6 graphical-view">
+                                                <div class="graph-bars">
+                                                    <span class="bar-red"
+                                                          [style.height]="getBarHeights(_dashboardService.crownBuildStats.number_of_providers, _dashboardService.crownBuildStats.total_red)"></span>
+                                                    <span class="bar-green"
+                                                          [style.height]="getBarHeights(_dashboardService.crownBuildStats.number_of_providers, _dashboardService.crownBuildStats.total_green)"></span>
+                                                    <span class="bar-yellow"
+                                                          [style.height]="getBarHeights(_dashboardService.crownBuildStats.number_of_providers, _dashboardService.crownBuildStats.total_yellow)"></span>
+                                                </div>
+                                                <ul class="graph-legend">
+                                                    <li><span class="bar-red"></span><label>{{calculatePercentage(_dashboardService.crownBuildStats.number_of_providers,
+                                                        _dashboardService.crownBuildStats.total_red)}}</label></li>
+                                                    <li><span class="bar-green"></span><label>{{calculatePercentage(_dashboardService.crownBuildStats.number_of_providers,
+                                                        _dashboardService.crownBuildStats.total_green)}}</label></li>
+                                                    <li><span class="bar-yellow"></span><label>{{calculatePercentage(_dashboardService.crownBuildStats.number_of_providers,
+                                                        _dashboardService.crownBuildStats.total_yellow)}}</label></li>
+                                                </ul>
+                                            </div>
+                                            <div class="fl-col-sm-6 content-view">
+                                                <b>{{_dashboardService.crownBuildStats.number_of_providers}}</b>
+                                                <small>Active Providers</small>
+                                                <ul class="graph-legend">
+                                                    <li><span class="bar-red"></span><label>{{_dashboardService.crownBuildStats.total_red}}</label>
+                                                    </li>
+                                                    <li><span class="bar-green"></span><label>{{_dashboardService.crownBuildStats.total_green}}</label>
+                                                    </li>
+                                                    <li><span class="bar-yellow"></span><label>{{_dashboardService.crownBuildStats.total_yellow}}</label>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-footer">
+                                        <div class="fl-row">
+                                            <a *ngFor="let algo of _dashboardService.moduleStats['Crown build up ']; let i=index;"
+                                               [ngClass]="{'active-link': i==0}" class="fl-col-sm-12 smalltab-view">{{algo.name}}</a>
+
+                                            <div class="clear-div"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fl-col-sm-3">
+                        <div class="fl-row">
+                            <div class="fl-col-sm-12">
+                                <div class="fl-box mb-lg">
+                                    <div class="box-heading">
+                                        <h2>{{_dashboardService.timeStats.algo_title}}</h2>
+                                        <a routerLink="/axiomatic/{{_dashboardService.timeStats.type}}/{{_dashboardService.timeStats.year}}"><i
+                                                class="fa fa-external-link"></i></a>
+                                    </div>
+                                    <div class="box-content">
+                                        <div class="fl-row">
+                                            <div class="fl-col-sm-6 graphical-view">
+                                                <div class="graph-bars">
+                                                    <span class="bar-red"
+                                                          [style.height]="getBarHeights(_dashboardService.timeStats.number_of_providers, _dashboardService.timeStats.total_red)"></span>
+                                                    <span class="bar-green"
+                                                          [style.height]="getBarHeights(_dashboardService.timeStats.number_of_providers, _dashboardService.timeStats.total_green)"></span>
+                                                    <span class="bar-yellow"
+                                                          [style.height]="getBarHeights(_dashboardService.timeStats.number_of_providers, _dashboardService.timeStats.total_yellow)"></span>
+                                                </div>
+                                                <ul class="graph-legend">
+                                                    <li><span class="bar-red"></span><label>{{calculatePercentage(_dashboardService.timeStats.number_of_providers,
+                                                        _dashboardService.timeStats.total_red)}}</label></li>
+                                                    <li><span class="bar-green"></span><label>{{calculatePercentage(_dashboardService.timeStats.number_of_providers,
+                                                        _dashboardService.timeStats.total_green)}}</label></li>
+                                                    <li><span class="bar-yellow"></span><label>{{calculatePercentage(_dashboardService.timeStats.number_of_providers,
+                                                        _dashboardService.timeStats.total_yellow)}}</label></li>
+                                                </ul>
+                                            </div>
+                                            <div class="fl-col-sm-6 content-view">
+                                                <b>{{_dashboardService.timeStats.number_of_providers}}</b>
+                                                <small>Active Providers</small>
+                                                <ul class="graph-legend">
+                                                    <li><span class="bar-red"></span><label>{{_dashboardService.timeStats.total_red}}</label>
+                                                    </li>
+                                                    <li><span class="bar-green"></span><label>{{_dashboardService.timeStats.total_green}}</label>
+                                                    </li>
+                                                    <li><span class="bar-yellow"></span><label>{{_dashboardService.timeStats.total_yellow}}</label>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-footer">
+                                        <div class="fl-row">
+                                            <a *ngFor="let algo of _dashboardService.moduleStats['Time Analysis']; let i=index;"
+                                               [ngClass]="{'active-link': i==0}" class="fl-col-sm-6 smalltab-view"
+                                               (click)="changeTimeAlgo(i, algo.algo_title)">{{algo.name}}</a>
+                                            <div class="clear-div"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fl-col-sm-3">
+                        <div class="fl-row">
+                            <div class="fl-col-sm-12">
+                                <div class="fl-box mb-lg">
+                                    <div class="box-heading">
+                                        <h2>{{_dashboardService.locationStats.algo_title}}</h2>
+                                        <a routerLink="/axiomatic/{{_dashboardService.locationStats.type}}/{{_dashboardService.locationStats.year}}"><i
+                                                class="fa fa-external-link"></i></a>
+                                    </div>
+                                    <div class="box-content">
+                                        <div class="fl-row">
+                                            <div class="fl-col-sm-6 graphical-view">
+                                                <div class="graph-bars">
+                                                    <span class="bar-red"
+                                                          [style.height]="getBarHeights(_dashboardService.locationStats.number_of_providers, _dashboardService.locationStats.total_red)"></span>
+                                                    <span class="bar-green"
+                                                          [style.height]="getBarHeights(_dashboardService.locationStats.number_of_providers, _dashboardService.locationStats.total_green)"></span>
+                                                    <span class="bar-yellow"
+                                                          [style.height]="getBarHeights(_dashboardService.locationStats.number_of_providers, _dashboardService.locationStats.total_yellow)"></span>
+                                                </div>
+                                                <ul class="graph-legend">
+                                                    <li><span class="bar-red"></span><label>{{calculatePercentage(_dashboardService.locationStats.number_of_providers,
+                                                        _dashboardService.locationStats.total_red)}}</label></li>
+                                                    <li><span class="bar-green"></span><label>{{calculatePercentage(_dashboardService.locationStats.number_of_providers,
+                                                        _dashboardService.locationStats.total_green)}}</label></li>
+                                                    <li><span class="bar-yellow"></span><label>{{calculatePercentage(_dashboardService.locationStats.number_of_providers,
+                                                        _dashboardService.locationStats.total_yellow)}}</label></li>
+                                                </ul>
+                                            </div>
+                                            <div class="fl-col-sm-6 content-view">
+                                                <b>{{_dashboardService.locationStats.number_of_providers}}</b>
+                                                <small>Active Providers</small>
+                                                <ul class="graph-legend">
+                                                    <li><span class="bar-red"></span><label>{{_dashboardService.locationStats.total_red}}</label>
+                                                    </li>
+                                                    <li><span class="bar-green"></span><label>{{_dashboardService.locationStats.total_green}}</label>
+                                                    </li>
+                                                    <li><span class="bar-yellow"></span><label>{{_dashboardService.locationStats.total_yellow}}</label>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-footer">
+                                        <div class="fl-row">
+                                            <a *ngFor="let algo of _dashboardService.moduleStats['place']; let i=index;"
+                                               [ngClass]="{'active-link': i==0}" class="fl-col-sm-6 smalltab-view"
+                                               (click)="changeLocationAlgo(i, algo.algo_title)">{{algo.name}}</a>
+                                            <div class="clear-div"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fl-row">
+                    <div class="fl-col-sm-6">
+                        <div class="fl-box mb-lg">
+                            <div class="box-heading">
+                                <h2>{{_dashboardService.perioStats.algo_title}}</h2>
+                                <a routerLink="/axiomatic/{{_dashboardService.perioStats.type}}/{{_dashboardService.perioStats.year}}"><i
+                                        class="fa fa-external-link"></i></a>
+                            </div>
+                            <div class="box-content">
+                                <div class="fl-row">
+                                    <div class="fl-col-sm-6 graphical-view">
+                                        <div class="graph-bars">
+                                            <span class="bar-red"
+                                                  [style.height]="getBarHeights(_dashboardService.perioStats.number_of_providers, _dashboardService.perioStats.total_red)"></span>
+                                            <span class="bar-green"
+                                                  [style.height]="getBarHeights(_dashboardService.perioStats.number_of_providers, _dashboardService.perioStats.total_green)"></span>
+                                            <span class="bar-yellow"
+                                                  [style.height]="getBarHeights(_dashboardService.perioStats.number_of_providers, _dashboardService.perioStats.total_yellow)"></span>
+                                        </div>
+                                        <ul class="graph-legend">
+                                            <li><span class="bar-red"></span><label>{{calculatePercentage(_dashboardService.perioStats.number_of_providers,
+                                                _dashboardService.perioStats.total_red)}}</label></li>
+                                            <li><span class="bar-green"></span><label>{{calculatePercentage(_dashboardService.perioStats.number_of_providers,
+                                                _dashboardService.perioStats.total_green)}}</label></li>
+                                            <li><span class="bar-yellow"></span><label>{{calculatePercentage(_dashboardService.perioStats.number_of_providers,
+                                                _dashboardService.perioStats.total_yellow)}}</label></li>
+                                        </ul>
+                                    </div>
+                                    <div class="fl-col-sm-6 content-view">
+                                        <b>{{_dashboardService.perioStats.number_of_providers}}</b>
+                                        <small>Active Providers</small>
+                                        <ul class="graph-legend">
+                                            <li><span class="bar-red"></span><label>{{_dashboardService.perioStats.total_red}}</label>
+                                            </li>
+                                            <li><span class="bar-green"></span><label>{{_dashboardService.perioStats.total_green}}</label>
+                                            </li>
+                                            <li><span class="bar-yellow"></span><label>{{_dashboardService.perioStats.total_yellow}}</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-footer">
+                                <div class="fl-row">
+                                    <a *ngFor="let algo of _dashboardService.moduleStats['perio']; let i=index;"
+                                       [ngClass]="{'active-link': i==0}" class="fl-col-sm-4 smalltab-view"
+                                       (click)="changePerioAlgo(i, algo.algo_title)">{{algo.name}}</a>
+                                    <div class="clear-div"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fl-col-sm-6">
+                        <div class="fl-box">
+                            <div class="box-heading">
+                                <h2>{{_dashboardService.extractionStats.algo_title}}</h2>
+                                <a routerLink="/axiomatic/{{_dashboardService.extractionStats.type}}/{{_dashboardService.extractionStats.year}}"><i
+                                        class="fa fa-external-link"></i></a>
+                            </div>
+                            <div class="box-content">
+                                <div class="fl-row">
+                                    <div class="fl-col-sm-6 graphical-view">
+                                        <div class="graph-bars">
+                                            <span class="bar-red"
+                                                  [style.height]="getBarHeights(_dashboardService.extractionStats.number_of_providers, _dashboardService.extractionStats.total_red)"></span>
+                                            <span class="bar-green"
+                                                  [style.height]="getBarHeights(_dashboardService.extractionStats.number_of_providers, _dashboardService.extractionStats.total_green)"></span>
+                                            <span class="bar-yellow"
+                                                  [style.height]="getBarHeights(_dashboardService.extractionStats.number_of_providers, _dashboardService.extractionStats.total_yellow)"></span>
+                                        </div>
+                                        <ul class="graph-legend">
+                                            <li><span class="bar-red"></span><label>{{calculatePercentage(_dashboardService.extractionStats.number_of_providers,
+                                                _dashboardService.extractionStats.total_red)}}</label></li>
+                                            <li><span class="bar-green"></span><label>{{calculatePercentage(_dashboardService.extractionStats.number_of_providers,
+                                                _dashboardService.extractionStats.total_green)}}</label></li>
+                                            <li><span class="bar-yellow"></span><label>{{calculatePercentage(_dashboardService.extractionStats.number_of_providers,
+                                                _dashboardService.extractionStats.total_yellow)}}</label></li>
+                                        </ul>
+                                    </div>
+                                    <div class="fl-col-sm-6 content-view">
+                                        <b>{{_dashboardService.extractionStats.number_of_providers}}</b>
+                                        <small>Active Providers</small>
+                                        <ul class="graph-legend">
+                                            <li><span class="bar-red"></span><label>{{_dashboardService.extractionStats.total_red}}</label>
+                                            </li>
+                                            <li><span class="bar-green"></span><label>{{_dashboardService.extractionStats.total_green}}</label>
+                                            </li>
+                                            <li><span class="bar-yellow"></span><label>{{_dashboardService.extractionStats.total_yellow}}</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-footer">
+                                <div class="fl-row">
+                                    <a *ngFor="let algo of _dashboardService.moduleStats['extraction']; let i=index;"
+                                       [ngClass]="{'active-link': i==0}" class="fl-col-sm-3 smalltab-view"
+                                       (click)="changeExtractionAlgo(i, algo.algo_title)">
+                                        {{algo.name}}
+                                    </a>
+                                    <div class="clear-div"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear-div"></div>
+            </div>
+            <div role="tabpanel" class="tab-pane active" id="impossible" *ngIf="impossibleFlag">
+                <div class="fl-row">
+                    <div class="fl-col-sm-3">
+                        <div class="fl-row">
+                            <div class="fl-col-sm-12">
+                                <div class="fl-box mb-lg">
+                                    <div class="box-heading">
+                                        <h2>{{_dashboardService.otherStats.algo_title}}</h2>
+                                        <a routerLink="/axiomatic/{{_dashboardService.otherStats.type}}/{{_dashboardService.otherStats.year}}"><i
+                                                class="fa fa-external-link"></i></a>
+                                    </div>
+                                    <div class="box-content">
+                                        <div class="fl-row">
+                                            <div class="fl-col-sm-6 graphical-view">
+                                                <div class="graph-bars">
+                                                    <span class="bar-red"
+                                                          [style.height]="getBarHeights(_dashboardService.otherStats.number_of_providers, _dashboardService.otherStats.total_red)"></span>
+                                                    <span class="bar-green"
+                                                          [style.height]="getBarHeights(_dashboardService.otherStats.number_of_providers, _dashboardService.otherStats.total_green)"></span>
+                                                    <span class="bar-yellow"
+                                                          [style.height]="getBarHeights(_dashboardService.otherStats.number_of_providers, _dashboardService.otherStats.total_yellow)"></span>
+                                                </div>
+                                                <ul class="graph-legend">
+                                                    <li><span class="bar-red"></span><label>{{calculatePercentage(_dashboardService.otherStats.number_of_providers,
+                                                        _dashboardService.otherStats.total_red)}}</label></li>
+                                                    <li><span class="bar-green"></span><label>{{calculatePercentage(_dashboardService.otherStats.number_of_providers,
+                                                        _dashboardService.otherStats.total_green)}}</label></li>
+                                                    <li><span class="bar-yellow"></span><label>{{calculatePercentage(_dashboardService.otherStats.number_of_providers,
+                                                        _dashboardService.otherStats.total_yellow)}}</label></li>
+                                                </ul>
+                                            </div>
+                                            <div class="fl-col-sm-6 content-view">
+                                                <b>{{_dashboardService.otherStats.number_of_providers}}</b>
+                                                <small>Active Providers</small>
+                                                <ul class="graph-legend">
+                                                    <li><span
+                                                            class="bar-red"></span><label>{{_dashboardService.otherStats.total_red}}</label>
+                                                    </li>
+                                                    <li><span
+                                                            class="bar-green"></span><label>{{_dashboardService.otherStats.total_green}}</label>
+                                                    </li>
+                                                    <li><span class="bar-yellow"></span><label>{{_dashboardService.otherStats.total_yellow}}</label>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-footer">
+                                        <div class="fl-row">
+                                            <a class="fl-col-sm-12 smalltab-view">{{_dashboardService.otherStats.name}}</a>
+                                            <div class="clear-div"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane active" id="statistical" *ngIf="statisticalFlag">
+                <div class="fl-row">
+                    <div class="fl-col-sm-3">
+                        <div class="fl-row">
+                            <div class="fl-col-sm-12">
+                                <div class="fl-box mb-lg">
+                                    <div class="box-heading">
+                                        <h2>{{_dashboardService.otherStats.algo_title}}</h2>
+                                        <a routerLink="/axiomatic/{{_dashboardService.otherStats.type}}/{{_dashboardService.otherStats.year}}"><i
+                                                class="fa fa-external-link"></i></a>
+                                    </div>
+                                    <div class="box-content">
+                                        <div class="fl-row">
+                                            <div class="fl-col-sm-6 graphical-view">
+                                                <div class="graph-bars">
+                                                    <span class="bar-red"
+                                                          [style.height]="getBarHeights(_dashboardService.otherStats.number_of_providers, _dashboardService.otherStats.total_red)"></span>
+                                                    <span class="bar-green"
+                                                          [style.height]="getBarHeights(_dashboardService.otherStats.number_of_providers, _dashboardService.otherStats.total_green)"></span>
+                                                    <span class="bar-yellow"
+                                                          [style.height]="getBarHeights(_dashboardService.otherStats.number_of_providers, _dashboardService.otherStats.total_yellow)"></span>
+                                                </div>
+                                                <ul class="graph-legend">
+                                                    <li><span class="bar-red"></span><label>{{calculatePercentage(_dashboardService.otherStats.number_of_providers,
+                                                        _dashboardService.otherStats.total_red)}}</label></li>
+                                                    <li><span class="bar-green"></span><label>{{calculatePercentage(_dashboardService.otherStats.number_of_providers,
+                                                        _dashboardService.otherStats.total_green)}}</label></li>
+                                                    <li><span class="bar-yellow"></span><label>{{calculatePercentage(_dashboardService.otherStats.number_of_providers,
+                                                        _dashboardService.otherStats.total_yellow)}}</label></li>
+                                                </ul>
+                                            </div>
+                                            <div class="fl-col-sm-6 content-view">
+                                                <b>{{_dashboardService.otherStats.number_of_providers}}</b>
+                                                <small>Active Providers</small>
+                                                <ul class="graph-legend">
+                                                    <li><span
+                                                            class="bar-red"></span><label>{{_dashboardService.otherStats.total_red}}</label>
+                                                    </li>
+                                                    <li><span
+                                                            class="bar-green"></span><label>{{_dashboardService.otherStats.total_green}}</label>
+                                                    </li>
+                                                    <li><span class="bar-yellow"></span><label>{{_dashboardService.otherStats.total_yellow}}</label>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-footer">
+                                        <div class="fl-row">
+                                            <a *ngFor="let algo of _dashboardService.moduleStats; let i=index;"
+                                               [ngClass]="{'active-link': i==0}" class="fl-col-sm-12 smalltab-view"
+                                               (click)="changeImpStatisticalAlgo(i)">{{algo.name}}</a>
+                                            <div class="clear-div"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane active" id="connection" *ngIf="connectionFlag">
+                <div class="fl-row">
+                    <div class="fl-col-sm-3">
+                        <div class="fl-row">
+                            <div class="fl-col-sm-12">
+                                <div class="fl-box mb-lg">
+                                    <div class="box-heading">
+                                        <h2>{{_dashboardService.otherStats.algo_title}}</h2>
+                                        <a routerLink="/axiomatic/{{_dashboardService.otherStats.type}}/{{_dashboardService.otherStats.year}}"><i
+                                                class="fa fa-external-link"></i></a>
+                                    </div>
+                                    <div class="box-content">
+                                        <div class="fl-row">
+                                            <div class="fl-col-sm-6 graphical-view">
+                                                <div class="graph-bars">
+                                                    <span class="bar-red"
+                                                          [style.height]="getBarHeights(_dashboardService.otherStats.number_of_providers, _dashboardService.otherStats.total_red)"></span>
+                                                    <span class="bar-green"
+                                                          [style.height]="getBarHeights(_dashboardService.otherStats.number_of_providers, _dashboardService.otherStats.total_green)"></span>
+                                                    <span class="bar-yellow"
+                                                          [style.height]="getBarHeights(_dashboardService.otherStats.number_of_providers, _dashboardService.otherStats.total_yellow)"></span>
+                                                </div>
+                                                <ul class="graph-legend">
+                                                    <li><span class="bar-red"></span><label>{{calculatePercentage(_dashboardService.otherStats.number_of_providers,
+                                                        _dashboardService.otherStats.total_red)}}</label></li>
+                                                    <li><span class="bar-green"></span><label>{{calculatePercentage(_dashboardService.otherStats.number_of_providers,
+                                                        _dashboardService.otherStats.total_green)}}</label></li>
+                                                    <li><span class="bar-yellow"></span><label>{{calculatePercentage(_dashboardService.otherStats.number_of_providers,
+                                                        _dashboardService.otherStats.total_yellow)}}</label></li>
+                                                </ul>
+                                            </div>
+                                            <div class="fl-col-sm-6 content-view">
+                                                <b>{{_dashboardService.otherStats.number_of_providers}}</b>
+                                                <small>Active Providers</small>
+                                                <ul class="graph-legend">
+                                                    <li><span
+                                                            class="bar-red"></span><label>{{_dashboardService.otherStats.total_red}}</label>
+                                                    </li>
+                                                    <li><span
+                                                            class="bar-green"></span><label>{{_dashboardService.otherStats.total_green}}</label>
+                                                    </li>
+                                                    <li><span class="bar-yellow"></span><label>{{_dashboardService.otherStats.total_yellow}}</label>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-footer">
+                                        <div class="fl-row">
+                                            <a *ngFor="let algo of _dashboardService.moduleStats; let i=index;"
+                                               [ngClass]="{'active-link': i==0}" class="fl-col-sm-12 smalltab-view"
+                                               (click)="changeImpStatisticalAlgo(i)">{{algo.name}}</a>
+                                            <div class="clear-div"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

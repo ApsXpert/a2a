@@ -1,0 +1,183 @@
+<vertical-sidebar></vertical-sidebar>
+<div class="content-area detail-page">
+    <div class="dr-info-box">
+        <div class="user-b1 col_6 last">
+            <div class="doctor-detail">
+                <h3>{{vdcService.vdcData.doctorDetail.attend_complete_name}}</h3>
+                <p>{{vdcService.vdcData.doctorDetail.attend}}</p>
+                <div class="dr-id"><img src="../../../../../../public/images/dr_address_white.png" alt="" height="12"
+                                        width="12"> <a (click)="vdcService.mAddressFlag = true" id="show_addresses"
+                                                       *ngIf="vdcService.doctorAddress.length > 1">Click to view
+                    provider addresses</a>
+                    <p *ngIf="vdcService.doctorAddress.length == 1">{{vdcService.doctorAddress[0]}}</p>
+                    <p *ngIf="vdcService.doctorAddress.length == 0">{{vdcService.vdcData.doctorDetail.pos}}</p>
+                </div>
+                <p><span class="gray-color">Review Period:</span> {{vdcService.dos | reviewDate}}</p>
+            </div>
+            <div class="flag-red" *ngIf="vdcService.vdcData.topDetail.color_code == 'red'"></div>
+            <div class="flag-green" *ngIf="vdcService.vdcData.topDetail.color_code == 'green'"></div>
+            <div class="flag-yellow" *ngIf="vdcService.vdcData.topDetail.color_code == 'yellow'"></div>
+            <p class="speciality_css"><span class="gray-color">Specialty: </span>
+                {{vdcService.vdcData.doctorSpecialty.speciality}}</p>
+        </div>
+        <div id="doc_addresses" class="doc-address-box" style="height: auto !important;"
+             *ngIf="vdcService.mAddressFlag">
+            <h3 style="margin:0; margin-bottom:10px; padding:0;">
+                Provider Addresses
+                <a (click)="vdcService.mAddressFlag = false" class="cross">x</a> <img
+                    src="../../../../../../public/images/dr_address_black.png" alt=""
+                    height="18" width="18" style="float:right;"></h3>
+
+            <div class="DocAddress" style="overflow:auto; height:auto;">
+                <p class="dr-address" *ngFor="let address of vdcService.doctorAddress">{{address}}</p>
+            </div>
+        </div>
+        <div class="user-b2 col_5 last right">
+            <div class="row">
+                <div class="tab doc-column-6">
+                    <ul>
+                        <li> {{vdcService.vdcData.topDetail.patient_count != null ?
+                            vdcService.vdcData.topDetail.patient_count : 0}}<br>
+                            <div class="small-font">Patients seen</div>
+                        </li>
+                        <li> {{vdcService.vdcData.topDetail.procedure_count}}
+                            <div class="small-font">Itemized Procedures<br>
+                                Performed
+                            </div>
+                        </li>
+                        <li> ${{vdcService.vdcData.topDetail.income | number : '1.2-2'}}
+                            <div class="small-font"> Total Amount<br>
+                                Billed
+                            </div>
+                        </li>
+                        <li id="hour_popup">
+                            {{vdcService.vdcData.topDetail.number_of_violations != null ?
+                            vdcService.vdcData.topDetail.number_of_violations : 0}}<br>
+                            <div class="small-font">Number of Periodontal <br>
+                                Exam Violation
+                            </div>
+                        </li>
+                        <li> ?
+                            <div class="small-font"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="days-popup-outer" id="days_poup" style="display: none;">
+                    <div class="days-popup-inner"><a class="cross-btn" href="javascript:void(0)"
+                                                     onclick="close_hover_data()"> <img alt=""
+                                                                                        src="../../../../../../public/images/cross-btn-2.png">
+                    </a>
+                        <table width="100%" height="80">
+                            <tr>
+                                <td width="16%" align="center"><span class="text-1">Monday</span> <br>
+                                    <span class="text-2">8 Hours</span></td>
+                                <td width="16%" align="center"><span class="text-1">Tuesday</span> <br>
+                                    <span class="text-2">8 Hours</span></td>
+                                <td width="16%" align="center"><span class="text-1">Wednesday</span> <br>
+                                    <span class="text-2">8Hours</span></td>
+                                <td width="16%" align="center"><span class="text-1">Thursday</span> <br>
+                                    <span class="text-2"> 8 Hours</span></td>
+                                <td width="16%" align="center"><span class="text-1">Friday</span> <br>
+                                    <span class="text-2">8 Hours</span></td>
+                                <td width="17%" align="center"><span class="text-1">Saturday</span> <br>
+                                    <span class="text-2">8 Hours</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="noRecordFound" style="height:400px !important;" *ngIf="vdcService.vdcData.doctorReports.length == 0">No
+        Record Found
+    </div>
+    <div class="grid-search mt-lg" *ngIf="vdcService.vdcData.doctorReports.length > 0">
+        <h3>Service Level Detail</h3>
+        <div class="search-filter" id="search-filter-list">
+            <div class="Inline-b">
+                <label class="colorWhite">Search</label>
+                <select name="search_by_day" id="search_by_day" class="select-filter" [(ngModel)]="mid"
+                        (change)="searchByMID()">
+                    <option value="1">All Patient(s)</option>
+                    <option *ngFor="let patient of vdcService.vdcData.patients"
+                            value="{{patient.mid}}">{{patient.mid}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="Inline-b">
+                <label class="colorWhite">Sort by</label>
+                <select class="select-filter" [(ngModel)]="orderBy" (change)="sortByMID($event)">
+                    <option value="">Sort by order</option>
+                    <option value="1">Patient ID (ASC)</option>
+                    <option value="2">Patient ID (DESC)</option>
+                </select>
+            </div>
+        </div>
+        <div class="Inline-b">
+            <button (click)="expandAll(vdcService.vdcData.doctorReports)" *ngIf="isCollapsed">Expand All Rows</button>
+            <button (click)="collapseAll(vdcService.vdcData.doctorReports)" *ngIf="isExpanded">Collapse All Rows</button>
+            <button (click)="backToList()" *ngIf="!vdcService.detailFlag">List</button>
+        </div>
+    </div>
+
+    <p *ngIf="loadingPagination" style="color: white;">Processing.....</p>
+    <p *ngIf="vdcService.vdcData.count.count == 0" style="color: white;">No Record Available</p>
+    <div *ngIf="!loadingPagination">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="items-grid"
+               *ngIf="vdcService.vdcData.count.count > 0">
+            <tr>
+                <th width="6%" class="textCenter">Sr.#</th>
+                <th width="10%" class="textCenter">Patient ID</th>
+                <th width="30%" class="textCenter">TX</th>
+                <th width="4%" class="textCenter">Description</th>
+                <th width="20%" class="textCenter">Fee $</th>
+                <th width="5%" class="textCenter">Action</th>
+                <th width="5%" class="textCenter">Reason</th>
+                <th width="5%" class="textCenter">Indicator</th>
+                <th width="20%" class="textCenter">View Detail</th>
+
+            </tr>
+            <tbody *ngFor="let item of vdcService.vdcData.doctorReports | paginate: { itemsPerPage: 10, currentPage: currentPageNumber, totalItems: vdcService.vdcData.count.count}; let i=index;">
+            <tr>
+                <td valign="top" align="center">{{getSrNo(i)}}</td>
+                <td valign="top" align="center">{{item.stats.mid}}</td>
+                <td valign="top" align="center"></td>
+                <td valign="top" align="center">&nbsp;</td>
+                <td valign="top" align="center"></td>
+                <td valign="top" align="center"></td>
+                <td valign="top" align="center"></td>
+                <td valign="top" align="center"></td>
+                <td align="center" valign="top">
+                    <a (click)="showTR(item.stats.mid)">
+                        <img src="../../../../../../public/images/icon-view.png" alt="" title="View Detail" width="16"
+                             height="19" border="0">
+                    </a>
+                </td>
+            </tr>
+            <tr *ngFor="let detail of item.details" [hidden]="!trObj[item.stats.mid]">
+
+                <td valign="top" align="center"></td>
+                <td valign="top" align="center"></td>
+                <td valign="top" align="center">{{detail.proc_code}}</td>
+                <td valign="top" align="center">{{detail.description}}</td>
+                <td valign="top" align="center">{{detail.paid_money | number : '1.2-2'}}</td>
+                <td valign="top" align="center">{{detail.status}}</td>
+                <td valign="top" align="center">{{detail.reason_level}}</td>
+                <td valign="top" align="center"><img
+                        src="{{getImageURL('../../../../../public/images/', item.stats.ryg_status, 'png')}}"></td>
+                <td valign="top" align="center"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <pagination-controls
+                (pageChange)="pageChanged($event)"
+                directionLinks="true"
+                autoHide="true"
+                previousLabel="Previous"
+                nextLabel="Next"
+                screenReaderPaginationLabel="Pagination">
+        </pagination-controls>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="state-popup" id="sidemenu-search" style="display: block;">
+    <h1><span id="sidemenu-search-heading">Search by Doctor</span> <a href="javascript:void(0)"
+                                                                      id="sidemenu-search-cross"><img
+            src="https://www.fraudlens.com/qa/geomap/images/cross.png" alt=""></a></h1>
+
+    <div class="form-area">
+        <form name="geomap_detail" id="geomap_detail" method="post"
+              action="https://www.fraudlens.com/qa/geomap/index.php?Action=fds.geomap  ">
+
+            <select name="geo_states" id="geo_states">
+                <option value="" selected>All States</option>
+                <option value="{{state.id}}" *ngFor="let state of connectionService.states;">{{state.id}}</option>
+            </select>
+            <select name="geo_year" id="geo_year">
+                <option value="" selected>Select Years</option>
+                <option value="{{year}}" *ngFor="let year of connectionService.yearsInData;">{{year}}</option>
+            </select>
+
+            <input type="radio" tabindex="4" name="connection_option" checked="" value="geomap"
+                   onchange="$('#geo_states').removeAttr('disabled');$('#geomap_detail').attr('action',web_path_geomap+'/index.php?Action=fds.geomap')">
+            Geomap
+            <input type="radio" tabindex="5" name="connection_option" value="patient_relationship"
+                   onchange="$('#geo_states').attr('disabled','disabled');$('#geomap_detail').attr('action',web_path_geomap+'/index.php?Action=fds.geomap_multi_visits')">
+            Patient Relationship
+            <input id="btntest" value="Filter Data" title="Filter data" class="filter-btn" type="submit">
+            <input id="search_type" name="search_type" value="geomap" type="hidden">
+            <input name="state_hidden_value" id="state_hidden_value" type="hidden" value="0">
+            <input name="state_id" id="state_id" type="hidden" value="Oregon"> <input name="state_id_short"
+                                                                                      id="state_id_short"
+                                                                                      type="hidden" value="OR">
+
+        </form>
+    </div>
+</div>

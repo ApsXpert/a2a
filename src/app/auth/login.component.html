@@ -1,0 +1,43 @@
+<div id="wrapper" class="container">
+
+    <!-- the header -->
+    <header class="login-header">
+        <h1> FraudLens Healthcare's solution <br>
+            to detect healthcare cost aberrations </h1>
+    </header>
+    <!-- the header end -->
+    <div class="row body-content">
+        <!-- Graph content -->
+        <section class="login-content" class="alpha omega">
+            <div class="formContainer">
+                <form id="login" class="login" name="frmlogin" (ngSubmit)="doLogin()" style="z-index:999;">
+                    <div class="inner-content">
+                        <h4><img src="../../../public/images/login-logo.png" alt="Fraud Detection"></h4>
+                        <p class="error" *ngIf="_appDataService.isLogout"> {{_appDataService.logoutMessage}}</p>
+                        <p>Email</p>
+                        <input name="email" id="email" type="email" [(ngModel)]="user.email" required>
+                        <p>Password</p>
+                        <input name="pwd" id="pwd" type="password" [(ngModel)]="user.pwd" required>
+                        <div class="clear15"></div>
+                        <p>Security Code</p>
+                        <recaptcha
+                                (resolved)="resolved($event)"
+                                siteKey="6LcOuyYTAAAAAHTjFuqhA52fmfJ_j5iFk5PsfXaU">
+                        </recaptcha>
+                        <div class="form-group">
+                            <input type="checkbox" name="Do you accept term and condition"
+                                   [(ngModel)]="user.tc"/>
+                            Do you accept term and condition
+                        </div>
+                        <p class="login-btn">
+                            <input name="btnsubmit" type="submit" value="Login" class="button" title="Login"
+                                   tabindex="5">
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <!-- Section content End -->
+
+    </div>
+</div>
